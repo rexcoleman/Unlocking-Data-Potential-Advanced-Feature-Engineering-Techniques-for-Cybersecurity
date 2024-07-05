@@ -33,11 +33,18 @@ Feature engineering is a critical aspect of the data science process, involving 
         - [3.1.8 Frequency Feature Creation](#318-frequency-feature-creation)
         - [3.1.9 Binary Feature Creation](#319-binary-feature-creation)
     - [3.2 Encoding Techniques](#32-encoding-techniques)
-        - [3.2.1 One-Hot Encoding](#321-one-hot-encoding)
-        - [3.2.2 Label Encoding](#322-label-encoding)
-        - [3.2.3 Frequency Encoding](#323-frequency-encoding)
-        - [3.2.4 Target Encoding](#324-target-encoding)
-        - [3.2.5 Temporal Encoding](#325-temporal-encoding)
+        - [3.2.1 Label Encoding](#321-label-encoding)
+        - [3.2.2 Frequency Encoding](#322-frequency-encoding)
+        - [3.2.3 One-Hot Encoding](#323-one-hot-encoding)
+        - [3.2.4 Binary Encoding](#324-binary-encoding)
+        - [3.2.5 Hashing](#325-hashing)
+        - [3.2.6 BaseN Encoding](#326-basen-encoding)
+        - [3.2.7 Mean (Target) Encoding](#327-mean-target-encoding)
+        - [3.2.8 Weight of Evidence Encoding](#328-weight-of-evidence-encoding)
+        - [3.2.9 Ordinal Encoding](#329-ordinal-encoding)
+        - [3.2.10 Leave-One-Out Encoding](#3210-leave-one-out-encoding)
+        - [3.2.11 Backward Difference Encoding](#3211-backward-difference-encoding)
+        - [3.2.12 Helmert Encoding](#3212-helmert-encoding)
     - [3.3 Feature Scaling](#33-feature-scaling)
         - [3.3.1 Normalization](#331-normalization)
         - [3.3.2 Standardization](#332-standardization)
@@ -152,20 +159,79 @@ Binary features are boolean indicators (0 or 1) representing the presence or abs
 
 ### 3.2 Encoding Techniques
 
-#### 3.2.1 One-Hot Encoding
-One-hot encoding converts categorical variables into a series of binary columns. In cybersecurity, one-hot encoding can represent different user roles or types of devices, enabling models to differentiate between them effectively.
+Encoding techniques transform categorical data into numerical formats that machine learning models can interpret more effectively. Different encoding strategies are suited to different scenarios based on the nature of the data and the model requirements. Below, we explore various encoding techniques, each with its unique advantages and applications in the field of cybersecurity.
 
-#### 3.2.2 Label Encoding
-Label encoding assigns a unique integer to each category value. In cybersecurity, label encoding can be used for ordinal data like security clearance levels, ensuring the model respects their hierarchical nature.
+#### 3.2.1 Label Encoding
+**Description:** Assigns a unique integer to each category based on alphabetical order.  
+**Pros:** Efficient and simple.  
+**Cons:** Implies an ordinal relationship which may not exist.  
+**Cybersecurity Example:** Encoding threat levels (Low, Medium, High) in security logs.
 
-#### 3.2.3 Frequency Encoding
-Frequency encoding replaces categories with their frequency in the dataset. In cybersecurity, frequency encoding can be useful for handling rare events, such as infrequent access locations, without introducing high-dimensional one-hot encoded features.
+#### 3.2.2 Frequency Encoding
+**Description:** Replaces categories with their occurrence counts.  
+**Pros:** Keeps information about category frequency.  
+**Cons:** Can merge different categories if they have the same frequency.  
+**Cybersecurity Example:** Encoding frequency of access to sensitive system resources.
 
-#### 3.2.4 Target Encoding
-Target encoding replaces categorical values with a summary statistic of the target variable for each category. In cybersecurity, target encoding can help in situations where certain actions are more predictive of security breaches, such as specific types of failed login attempts.
+#### 3.2.3 One-Hot Encoding
+**Description:** Creates a new binary column for each category.  
+**Pros:** Does not assume ordinality between categories.  
+**Cons:** Increases dataset dimensionality significantly.  
+**Cybersecurity Example:** Encoding HTTP methods (GET, POST, DELETE) in web traffic data.
 
-#### 3.2.5 Temporal Encoding
-Temporal encoding transforms time-based features into cyclic representations (e.g., sine and cosine transformations). In cybersecurity, temporal encoding can help capture cyclical patterns in user behavior or system activities.
+#### 3.2.4 Binary Encoding
+**Description:** Converts categories into binary codes.  
+**Pros:** More compact than one-hot encoding.  
+**Cons:** Introduces multiple columns.  
+**Cybersecurity Example:** Encoding network protocol types.
+
+#### 3.2.5 Hashing
+**Description:** Uses a hash function to encode categories into integers.  
+**Pros:** Efficient with high cardinality features.  
+**Cons:** Potential hash collisions.  
+**Cybersecurity Example:** Anonymizing IP addresses in large datasets.
+
+#### 3.2.6 BaseN Encoding
+**Description:** Generalization of binary encoding using any base N.  
+**Pros:** More flexible and efficient than one-hot encoding.  
+**Cons:** Complexity can increase with larger N.  
+**Cybersecurity Example:** Encoding software version numbers.
+
+#### 3.2.7 Mean (Target) Encoding
+**Description:** Replaces categories with the average value of the target for that category.  
+**Pros:** Can improve model performance.  
+**Cons:** Risk of overfitting.  
+**Cybersecurity Example:** Encoding country codes in fraud detection systems based on fraud rates.
+
+#### 3.2.8 Weight of Evidence Encoding
+**Description:** Quantifies the predictive power of a category with respect to the target.  
+**Pros:** Provides interpretable encoding.  
+**Cons:** Biased by rare categories.  
+**Cybersecurity Example:** Encoding user roles for predicting security policy violations.
+
+#### 3.2.9 Ordinal Encoding
+**Description:** Converts categories to integers based on the order.  
+**Pros:** Minimal feature expansion.  
+**Cons:** Assumes an order that might not exist.  
+**Cybersecurity Example:** Encoding risk ratings from security tools.
+
+#### 3.2.10 Leave-One-Out Encoding
+**Description:** Similar to target encoding but reduces overfitting by excluding the current row's category while calculating the mean.  
+**Pros:** Reduces overfitting risk.  
+**Cons:** Computationally intensive.  
+**Cybersecurity Example:** Encoding asset tags when assessing compromise risks.
+
+#### 3.2.11 Backward Difference Encoding
+**Description:** Compares the mean of the dependent variable for one level to the mean of the previous level.  
+**Pros:** Useful for ordinal data with linear relationships.  
+**Cons:** Assumes linear relationships.  
+**Cybersecurity Example:** Encoding levels of security software upgrades.
+
+#### 3.2.12 Helmert Encoding
+**Description:** Compares each level of a categorical variable to the mean of the subsequent levels.  
+**Pros:** Does not assume a starting point.  
+**Cons:** Complex and harder to interpret.  
+**Cybersecurity Example:** Useful in experimental designs in cybersecurity studies.
 
 ### 3.3 Feature Scaling
 
